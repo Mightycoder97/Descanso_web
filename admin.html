@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descanso | Panel de Administración</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         Login Section 
+         ========================================= -->
+    <section id="login-section">
+        <div class="login-container">
+            <img src="img/logo.jpg" alt="Logo Descanso" style="height: 64px; border-radius: 8px; margin-bottom: 20px;">
+            <h2>Acceso Administrador</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-admin btn-admin-primary" style="width: 100%;">Ingresar</button>
+                <div id="login-error" class="error-message">Credenciales incorrectas (Usa: admin / admin123)</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- =========================================
+         Admin Dashboard (Hidden by default)
+         ========================================= -->
+    <section id="admin-dashboard" style="display: none;">
+        <div class="dashboard-header">
+            <div>
+                <img src="img/logo.jpg" alt="Logo Descanso"
+                    style="height: 48px; border-radius: 8px; vertical-align: middle; margin-right: 15px;">
+                <h1 style="display: inline-block; vertical-align: middle; margin: 0; color: #1a1a1a;">Sistema de Gestión
+                </h1>
+            </div>
+            <div>
+                <a href="clientes.html" class="btn-admin btn-outline"
+                    style="margin-right: 10px; text-decoration: none; padding: 0.5rem 1rem;">Ver Lista de Clientes</a>
+                <button id="btn-logout" class="btn-admin" style="padding: 0.5rem 1rem;">Cerrar
+                    Sesión</button>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Client Data Form -->
+            <div class="card">
+                <h3>Datos del Cliente</h3>
+                <div class="form-group">
+                    <label for="cli-nombre">Nombre Completo</label>
+                    <input type="text" id="cli-nombre" placeholder="Ej: Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="cli-dni">DNI / RUC</label>
+                    <input type="text" id="cli-dni" placeholder="Ej: 12345678">
+                </div>
+                <div class="form-group">
+                    <label for="cli-telefono">Teléfono</label>
+                    <input type="text" id="cli-telefono" placeholder="Ej: 999 999 999">
+                </div>
+                <div class="form-group">
+                    <label for="cli-correo">Correo Electrónico</label>
+                    <input type="email" id="cli-correo" placeholder="Ej: correo@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label for="cli-direccion">Dirección</label>
+                    <input type="text" id="cli-direccion" placeholder="Ej: Av. Principal 123, Miraflores">
+                </div>
+            </div>
+
+            <!-- Pet Data Form -->
+            <div class="card">
+                <h3>Datos de la Mascota</h3>
+                <div class="form-group">
+                    <label for="pet-nombre">Nombre de Mascota</label>
+                    <input type="text" id="pet-nombre" placeholder="Ej: Firulais">
+                </div>
+                <div class="form-group">
+                    <label for="pet-especie">Especie</label>
+                    <select id="pet-especie">
+                        <option value="Canino">Canino(Perro)</option>
+                        <option value="Felino">Felino(Gato)</option>
+                        <option value="Ave">Ave</option>
+                        <option value="Roedor">Roedor</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pet-raza">Raza</label>
+                    <input type="text" id="pet-raza" placeholder="Ej: Mestizo">
+                </div>
+                <div class="form-group" style="display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label for="pet-edad">Edad</label>
+                        <input type="text" id="pet-edad" placeholder="Ej: 5 años">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="pet-peso">Peso (kg)</label>
+                        <input type="number" step="0.1" id="pet-peso" placeholder="Ej: 12.5">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan & Service Form -->
+            <div class="card">
+                <h3>Detalle del Servicio</h3>
+                <div class="form-group">
+                    <label for="plan-servicio">Plan Seleccionado</label>
+                    <select id="plan-servicio">
+                        <option value="Basico">Plan Básico (Cremación + Urna Estándar)</option>
+                        <option value="Premium">Plan Premium (Urna Personalizada + Vela)</option>
+                        <option value="Eco">Plan Ecológico (Maceta Biodegradable)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="plan-precio">Precio del Servicio (S/)</label>
+                    <input type="number" step="0.01" id="plan-precio" placeholder="Ej: 450.00">
+                </div>
+                <div class="form-group">
+                    <label for="plan-fecha">Fecha del Servicio</label>
+                    <input type="date" id="plan-fecha">
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+                <p style="font-size: 0.9rem; color: #666; font-style: italic;">
+                    Nota: Llena todos los datos antes de generar los documentos para que aparezcan en la versión final
+                    impresa.
+                </p>
+            </div>
+
+            <!-- Action Buttons for Saving and Printing -->
+            <div class="action-buttons">
+                <button id="btn-guardar" class="btn-admin" style="background-color: #4CAF50; width: 100%;">Guardar Datos
+                    en Firebase</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Admin JS -->
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>

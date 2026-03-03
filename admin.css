@@ -1,0 +1,550 @@
+/* =========================================
+   Admin Styles
+   ========================================= */
+
+body {
+    background-color: #f4f7f6;
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+    color: #333;
+}
+
+/* =========================================
+   Login Section
+   ========================================= */
+#login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f4f7f6, #e9ecef);
+}
+
+.login-container {
+    background: #fff;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 2rem;
+    color: #1a1a1a;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #D6CA3E;
+    /* Descanso primary color */
+}
+
+/* =========================================
+   Dashboard Section
+   ========================================= */
+#admin-dashboard {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    border-bottom: 2px solid #D6CA3E;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.action-buttons {
+    grid-column: 1 / -1;
+    /* Span full width */
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn-admin {
+    background-color: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-admin:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.btn-admin-primary {
+    background-color: #D6CA3E;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.btn-admin-primary:hover {
+    background-color: #c4b934;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+/* =========================================
+   Print Templates (Hidden by default)
+   ========================================= */
+.print-template {
+    display: none;
+    background: #fff;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Print Specific Rules */
+@media print {
+    @page {
+        margin: 0;
+        /* Let the template handle margins */
+        /* Note: Page size and orientation is handled via JS class injection */
+    }
+
+    body {
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Hide UI elements */
+    #login-section,
+    #admin-dashboard,
+    .navbar,
+    .footer {
+        display: none !important;
+    }
+
+    /* Show only active print template */
+    .print-template.active-print {
+        display: block !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: white;
+    }
+
+    /* Common Print Styles */
+    .print-container {
+        padding: 40px;
+        box-sizing: border-box;
+    }
+
+    .print-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        border-bottom: 2px solid #D6CA3E;
+        padding-bottom: 20px;
+    }
+
+    .print-header img {
+        height: 60px;
+    }
+
+    .company-details {
+        text-align: right;
+        font-size: 12px;
+        color: #555;
+    }
+
+    .company-details strong {
+        font-size: 16px;
+        color: #1a1a1a;
+    }
+
+    .print-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #1a1a1a;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .data-row {
+        display: flex;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .data-label {
+        font-weight: 600;
+        width: 150px;
+        color: #555;
+    }
+
+    .data-value {
+        flex: 1;
+        border-bottom: 1px dotted #ccc;
+    }
+
+    /* --- Factura Specific --- */
+    .view-factura .print-container {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+    }
+
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+        font-size: 14px;
+    }
+
+    .invoice-table th,
+    .invoice-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .invoice-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+
+    .invoice-table .amount {
+        text-align: right;
+    }
+
+    .invoice-total {
+        text-align: right;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    /* --- Contrato Specific --- */
+    .view-contrato .print-container {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+    }
+
+    .contract-body {
+        font-size: 12px;
+        line-height: 1.6;
+        text-align: justify;
+        margin-bottom: 40px;
+    }
+
+    .contract-body h4 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .signatures {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 80px;
+    }
+
+    .signature-block {
+        text-align: center;
+        width: 200px;
+    }
+
+    .signature-line {
+        border-top: 1px solid #1a1a1a;
+        margin-bottom: 10px;
+    }
+
+    /* --- Certificado Specific --- */
+    .view-certificado {
+        @page {
+            size: A4 landscape;
+        }
+    }
+
+    .view-certificado .print-template {
+        background: #fff;
+        position: relative;
+    }
+
+    .view-certificado .print-container {
+        width: 297mm;
+        height: 210mm;
+        margin: 0 auto;
+        padding: 20mm;
+        position: relative;
+        text-align: center;
+        border: 10px solid #D6CA3E;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle, #ffffff 0%, #fafafa 100%);
+    }
+
+    .cert-bg-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.05;
+        width: 60%;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .cert-content {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .cert-logo {
+        height: 70px;
+        margin-bottom: 20px;
+    }
+
+    .cert-title {
+        font-size: 36px;
+        font-family: serif;
+        color: #B5A82E;
+        letter-spacing: 4px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    .cert-subtitle {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 40px;
+        font-style: italic;
+    }
+
+    .cert-text {
+        font-size: 20px;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    .cert-name {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1a1a1a;
+        border-bottom: 2px solid #D6CA3E;
+        display: inline-block;
+        padding: 0 40px;
+        margin: 10px 0;
+    }
+
+    .cert-date {
+        margin-top: 40px;
+        font-size: 16px;
+        color: #777;
+    }
+
+    .cert-footer-text {
+        font-size: 14px;
+        color: #777;
+        margin-top: 40px;
+        font-style: italic;
+    }
+}
+
+/* =========================================
+   Data Tables & Badges
+   ========================================= */
+.table-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    text-align: left;
+}
+
+.data-table th,
+.data-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+}
+
+.data-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.data-table tbody tr:hover {
+    background-color: #fbfbfb;
+}
+
+.badge-status {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.status-contactado {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.status-cotizacion {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-cancelado {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-atendido {
+    background-color: #D6CA3E;
+    color: #1a1a1a;
+}
+
+/* =========================================
+   Modals
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #1a1a1a;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 2rem;
+}

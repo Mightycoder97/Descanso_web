@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descanso | Gestión de Clientes</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         Login Section 
+         ========================================= -->
+    <section id="login-section">
+        <div class="login-container">
+            <img src="img/logo.jpg" alt="Logo Descanso" style="height: 64px; border-radius: 8px; margin-bottom: 20px;">
+            <h2>Acceso Administrador</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-admin btn-admin-primary" style="width: 100%;">Ingresar</button>
+                <div id="login-error" class="error-message">Credenciales incorrectas (Usa: admin / admin123)</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- =========================================
+         Client List Dashboard (Hidden by default)
+         ========================================= -->
+    <section id="admin-dashboard" style="display: none;">
+        <div class="dashboard-header">
+            <div>
+                <img src="img/logo.jpg" alt="Logo Descanso"
+                    style="height: 48px; border-radius: 8px; vertical-align: middle; margin-right: 15px;">
+                <h1 style="display: inline-block; vertical-align: middle; margin: 0; color: #1a1a1a;">Lista de Clientes
+                </h1>
+            </div>
+            <div>
+                <a href="admin.html" class="btn-admin btn-outline"
+                    style="margin-right: 10px; text-decoration: none; padding: 0.5rem 1rem;">+ Nuevo Cliente</a>
+                <button id="btn-logout" class="btn-admin" style="padding: 0.5rem 1rem;">Cerrar
+                    Sesión</button>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 0; overflow: hidden;">
+            <div
+                style="padding: 2rem; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0; border: none; padding: 0;">Registro de Clientes</h3>
+                <span id="loading-indicator" style="color: #666; font-style: italic;">Cargando clientes...</span>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Mascota</th>
+                            <th>Plan</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientes-tbody">
+                        <!-- Filled via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         Status Change Modal
+         ========================================= -->
+    <div id="status-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Actualizar Estado</h3>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="status-form">
+                    <input type="hidden" id="modal-client-id">
+
+                    <div class="form-group">
+                        <label for="estado-select">Nuevo Estado</label>
+                        <select id="estado-select">
+                            <option value="Contactado">Contactado</option>
+                            <option value="Cotizacion Enviada">Cotización Enviada</option>
+                            <option value="Cancelado">Cancelado (Pagado)</option>
+                            <option value="Atendido">Atendido</option>
+                        </select>
+                    </div>
+
+                    <div id="payment-fields"
+                        style="display: none; background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #eee;">
+                        <h4 style="margin-top: 0; margin-bottom: 15px; font-size: 1rem;">Detalles del Pago</h4>
+                        <div class="form-group">
+                            <label for="tipo-pago">Tipo de Pago</label>
+                            <select id="tipo-pago">
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Transferencia">Transferencia Bancaria</option>
+                                <option value="Yape/Plin">Yape / Plin</option>
+                                <option value="Tarjeta">Tarjeta de Créd./Déb.</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="comprobante">Nro. de Operación / Recibo</label>
+                            <input type="text" id="comprobante" placeholder="Ej: OP-987654321">
+                        </div>
+                    </div>
+
+                    <div class="action-buttons" style="margin-top: 0;">
+                        <button type="submit" class="btn-admin btn-admin-primary" style="width: 100%;">Guardar
+                            Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================
+         Print Modal
+         ========================================= -->
+    <div id="print-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Imprimir Documentos</h3>
+                <button class="modal-close" id="close-print-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-top: 0; margin-bottom: 20px; color: #555;">Seleccione el documento que desea generar
+                    para este cliente:</p>
+                <input type="hidden" id="print-client-id">
+                <div class="action-buttons" style="display: flex; flex-direction: column; gap: 10px; margin-top: 0;">
+                    <button id="btn-print-factura" class="btn-admin btn-admin-primary">Generar Factura (A4
+                        Vertical)</button>
+                    <button id="btn-print-contrato" class="btn-admin">Generar Contrato (A4 Vertical)</button>
+                    <button id="btn-print-certificado" class="btn-admin" style="background-color: #555;">Generar
+                        Certificado (A4 Horizontal)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================
+         PRINT TEMPLATES (Hidden in UI)
+         ========================================= -->
+
+    <!-- Template: Factura -->
+    <div id="tpl-factura" class="print-template">
+        <div class="print-container">
+            <div class="print-header">
+                <img src="img/logo.jpg" alt="Logo Descanso">
+                <div class="company-details">
+                    <strong>DESCANSO S.A.C.</strong><br>
+                    RUC: 20123456789<br>
+                    Av. Los Olivos 456, Lima<br>
+                    Teléfono: +51 999 999 999<br>
+                    hola@descanso.pe
+                </div>
+            </div>
+
+            <div class="print-title">FACTURA ELECTRÓNICA<br> <span
+                    style="font-size: 16px; font-weight: normal; color: #555;">Nro: F001-0004589</span></div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <div style="flex: 1;">
+                    <div class="data-row"><span class="data-label">Cliente:</span> <span
+                            class="data-value f-cli-nombre"></span></div>
+                    <div class="data-row"><span class="data-label">DNI/RUC:</span> <span
+                            class="data-value f-cli-dni"></span></div>
+                    <div class="data-row"><span class="data-label">Dirección:</span> <span
+                            class="data-value f-cli-direccion"></span></div>
+                </div>
+                <div style="width: 250px;">
+                    <div class="data-row"><span class="data-label" style="width: 100px;">Fecha Emisión:</span> <span
+                            class="data-value f-fecha" style="text-align: right;"></span></div>
+                    <div class="data-row"><span class="data-label" style="width: 100px;">Moneda:</span> <span
+                            class="data-value" style="text-align: right;">Soles (PEN)</span></div>
+                </div>
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Cant.</th>
+                        <th style="width: 60%;">Descripción</th>
+                        <th style="width: 15%; text-align: right;">P. Unit.</th>
+                        <th style="width: 15%; text-align: right;">Importe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <strong>Servicio de Cremación de Mascotas</strong><br>
+                            Mascota: <span class="f-pet-nombre"></span><br>
+                            Paquete: <span class="f-plan"></span>
+                        </td>
+                        <td class="amount f-precio"></td>
+                        <td class="amount f-precio"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="invoice-total">
+                <div><span>Subtotal:</span> <span class="f-precio"
+                        style="display: inline-block; width: 100px; font-weight: normal;"></span></div>
+                <div><span>IGV (18%):</span> <span
+                        style="display: inline-block; width: 100px; font-weight: normal;">INCLUIDO</span></div>
+                <div style="border-top: 2px solid #000; margin-top: 10px; padding-top: 10px;"><span>Total a
+                        Pagar:</span> <span class="f-total" style="display: inline-block; width: 100px;"></span></div>
+            </div>
+
+            <div style="margin-top: 50px; text-align: center; font-size: 12px; color: #777;">
+                Representación impresa de la factura electrónica.<br>
+                Gracias por su confianza.
+            </div>
+        </div>
+    </div>
+
+    <!-- Template: Contrato -->
+    <div id="tpl-contrato" class="print-template">
+        <div class="print-container">
+            <div class="print-header">
+                <img src="img/logo.jpg" alt="Logo Descanso">
+                <div class="company-details">
+                    <strong>CONTRATO DE PRESTACIÓN DE SERVICIOS</strong><br>
+                    Nro. C-2026-0489<br>
+                    Fecha: <span class="c-fecha"></span>
+                </div>
+            </div>
+
+            <div class="print-title">TÉRMINOS DEL SERVICIO</div>
+
+            <div class="contract-body">
+                <p>Conste por el presente documento, el contrato de prestación de servicios funerarios y de cremación de
+                    mascotas que celebran, de una parte, <strong>DESCANSO S.A.C.</strong>, con RUC 20123456789, a quien
+                    en adelante se le denominará "LA EMPRESA"; y de la otra parte, el cliente cuyos datos se detallan a
+                    continuación, a quien en adelante se le denominará "EL CLIENTE":</p>
+
+                <h4>1. DATOS DEL CLIENTE</h4>
+                <div class="data-row"><span class="data-label">Nombre:</span> <span
+                        class="data-value c-cli-nombre"></span></div>
+                <div class="data-row"><span class="data-label">DNI/RUC:</span> <span
+                        class="data-value c-cli-dni"></span></div>
+                <div class="data-row"><span class="data-label">Dirección:</span> <span
+                        class="data-value c-cli-direccion"></span></div>
+
+                <h4>2. DATOS DE LA MASCOTA</h4>
+                <div class="data-row"><span class="data-label">Nombre:</span> <span
+                        class="data-value c-pet-nombre"></span></div>
+                <div class="data-row"><span class="data-label">Especie:</span> <span
+                        class="data-value c-pet-especie"></span></div>
+                <div class="data-row"><span class="data-label">Raza:</span> <span class="data-value c-pet-raza"></span>
+                </div>
+
+                <h4>3. DETALLE DEL SERVICIO</h4>
+                <p>LA EMPRESA se obliga frente a EL CLIENTE a prestar el servicio de cremación acorde a los estándares
+                    de salubridad, respeto y dignidad correspondientes al plan: <strong><span
+                            class="c-plan"></span></strong>.</p>
+                <p>El costo total por los servicios descritos asciende a la suma de <strong><span
+                            class="c-precio"></span></strong>, los cuales han sido cancelados en su totalidad a la firma
+                    del presente documento.</p>
+
+                <h4>4. CLÁUSULAS ADICIONALES</h4>
+                <p>LA EMPRESA garantiza la entrega individual de las cenizas en el recipiente acordado según el plan. EL
+                    CLIENTE certifica que tiene la autoridad legal para disponer de los restos mortales de la mascota
+                    antes mencionada.</p>
+
+                <p style="margin-top: 20px;">En señal de conformidad con todos los términos aquí descritos, ambas partes
+                    firman el presente contrato en dos ejemplares de igual valor legal.</p>
+            </div>
+
+            <div class="signatures">
+                <div class="signature-block">
+                    <div class="signature-line"></div>
+                    <strong>EL CLIENTE</strong><br>
+                    DNI: <span class="c-cli-dni"></span>
+                </div>
+                <div class="signature-block">
+                    <div class="signature-line"></div>
+                    <strong>DESCANSO S.A.C.</strong><br>
+                    RUC: 20123456789
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template: Certificado (Landscape A4 Layout) -->
+    <div id="tpl-certificado" class="print-template">
+        <div class="print-container">
+            <img src="img/logo.jpg" alt="Logo Background" class="cert-bg-logo">
+            <div class="cert-content">
+                <img src="img/logo.jpg" alt="Logo Descanso" class="cert-logo">
+                <div class="cert-title">Certificado de Cremación</div>
+                <div class="cert-subtitle">Un tributo a una vida llena de amor</div>
+
+                <div class="cert-text">
+                    El presente documento certifica que<br>
+                    los restos de nuestro amado amigo<br>
+                    <div class="cert-name cert-pet-nombre"></div><br>
+                    fueron tratados de manera digna y respetuosa<br>
+                    mediante el proceso de cremación individual.
+                </div>
+
+                <div class="cert-date cert-fecha"></div>
+
+                <div class="signatures" style="margin-top: 60px;">
+                    <div class="signature-block">
+                        <div class="signature-line" style="border-top: 1px solid #D6CA3E;"></div>
+                        <strong style="color: #555;">Dirección General</strong><br>
+                        <span style="font-size: 12px; color: #777;">Descanso S.A.C.</span>
+                    </div>
+                </div>
+
+                <div class="cert-footer-text">
+                    "Aquellos que amamos no se van, caminan a nuestro lado cada día."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script modules -->
+    <script type="module" src="clientes.js"></script>
+</body>
+
+</html>
