@@ -194,14 +194,15 @@ body {
     .print-container {
         padding: 40px;
         box-sizing: border-box;
+        background: #fff;
     }
 
     .print-header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 40px;
-        border-bottom: 2px solid #D6CA3E;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 3px solid #D6CA3E;
         padding-bottom: 20px;
     }
 
@@ -211,108 +212,215 @@ body {
 
     .company-details {
         text-align: right;
-        font-size: 12px;
-        color: #555;
+        font-size: 13px;
+        color: #444;
+        line-height: 1.4;
     }
 
     .company-details strong {
-        font-size: 16px;
+        font-size: 18px;
         color: #1a1a1a;
+        font-weight: 700;
+        letter-spacing: 0.5px;
     }
 
     .print-title {
         text-align: center;
-        font-size: 24px;
+        font-size: 26px;
+        font-family: 'Playfair Display', serif;
         font-weight: 700;
         margin-bottom: 30px;
         color: #1a1a1a;
-        text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
     }
 
     .data-row {
         display: flex;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         font-size: 14px;
+        line-height: 1.5;
     }
 
     .data-label {
         font-weight: 600;
-        width: 150px;
+        width: 140px;
         color: #555;
     }
 
     .data-value {
         flex: 1;
-        border-bottom: 1px dotted #ccc;
+        border-bottom: 1px solid #eee;
+        color: #222;
+        padding-bottom: 3px;
     }
 
     /* --- Factura Specific --- */
     .view-factura .print-container {
-        width: 210mm;
-        min-height: 297mm;
+        width: 100%;
+        max-width: 210mm;
+        height: 98vh; /* Prevents 2nd page overflow */
         margin: 0 auto;
+        padding: 40px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .client-info-box {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        background: #fdfdfd;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #eee;
     }
 
     .invoice-table {
         width: 100%;
-        border-collapse: collapse;
-        margin-top: 30px;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
         font-size: 14px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #eee;
     }
 
     .invoice-table th,
     .invoice-table td {
-        border: 1px solid #ddd;
-        padding: 12px;
+        padding: 15px;
         text-align: left;
+        border-bottom: 1px solid #eee;
     }
 
     .invoice-table th {
-        background-color: #f8f9fa;
+        background-color: #fcfcfc;
         font-weight: 600;
+        color: #444;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #eee;
+    }
+
+    .invoice-table td {
+        background-color: #fff;
     }
 
     .invoice-table .amount {
         text-align: right;
     }
+    
+    .font-weight-bold {
+        font-weight: 600;
+        color: #1a1a1a;
+    }
 
-    .invoice-total {
-        text-align: right;
-        margin-top: 20px;
+    .invoice-summary {
+        margin-top: 30px;
+        width: 300px;
+        margin-left: auto;
+        background: #fdfdfd;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .total-row {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 2px solid #D6CA3E;
         font-size: 18px;
         font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    .factura-footer {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: #777;
+        position: relative;
+    }
+    .factura-footer .qr-placeholder {
+        margin-top: 20px;
     }
 
     /* --- Contrato Specific --- */
     .view-contrato .print-container {
-        width: 210mm;
-        min-height: 297mm;
+        width: 100%;
+        max-width: 210mm;
+        height: 98vh; /* Prevents overflow */
         margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        font-family: 'Outfit', sans-serif;
+    }
+
+    .watermark-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 400px;
+        background-image: url('img/logo.jpg'); /* Might need absolute path or just assume it resolves correctly */
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.03;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .print-header.c-header, .print-title.c-title, .contract-body, .signatures {
+        position: relative;
+        z-index: 1;
     }
 
     .contract-body {
-        font-size: 12px;
-        line-height: 1.6;
+        font-size: 13.5px;
+        line-height: 1.7;
         text-align: justify;
         margin-bottom: 40px;
+        color: #333;
     }
 
-    .contract-body h4 {
-        margin-top: 20px;
-        margin-bottom: 10px;
-        font-size: 14px;
+    .contract-section {
+        margin-top: 25px;
+    }
+
+    .contract-section h4 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 15px;
+        color: #1a1a1a;
+        background: #fdfdfd;
+        padding: 5px 10px;
+        border-left: 3px solid #D6CA3E;
+    }
+    
+    .data-grid {
+        padding-left: 10px;
     }
 
     .signatures {
         display: flex;
         justify-content: space-around;
-        margin-top: 80px;
+        margin-top: 70px;
     }
 
     .signature-block {
         text-align: center;
-        width: 200px;
+        width: 220px;
     }
 
     .signature-line {
@@ -324,28 +432,48 @@ body {
     .view-certificado {
         @page {
             size: A4 landscape;
+            margin: 0;
         }
     }
 
     .view-certificado .print-template {
         background: #fff;
-        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
     }
 
     .view-certificado .print-container {
-        width: 297mm;
-        height: 210mm;
-        margin: 0 auto;
-        padding: 20mm;
+        width: 98vw; /* Safe width logic for landscape */
+        height: 98vh; /* Fix for 2 pages: using strictly vh to avoid spanning overflow into a second page */
+        margin: 1vh auto;
+        padding: 0;
         position: relative;
         text-align: center;
-        border: 10px solid #D6CA3E;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: radial-gradient(circle, #ffffff 0%, #fafafa 100%);
+        background: #faf8f5;
+        overflow: hidden;
+    }
+
+    /* Elegant double border */
+    .cert-border-outer {
+        position: absolute;
+        top: 20px; bottom: 20px; left: 20px; right: 20px;
+        border: 2px solid #D6CA3E;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .cert-border-inner {
+        position: absolute;
+        top: 28px; bottom: 28px; left: 28px; right: 28px;
+        border: 1px solid #B5A82E;
+        z-index: 2;
+        pointer-events: none;
     }
 
     .cert-bg-logo {
@@ -353,60 +481,90 @@ body {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        opacity: 0.05;
-        width: 60%;
+        opacity: 0.04;
+        height: 80%;
         pointer-events: none;
-        z-index: 0;
+        z-index: 1;
+        filter: grayscale(100%);
     }
 
     .cert-content {
         position: relative;
-        z-index: 1;
-        width: 100%;
-        max-width: 800px;
+        z-index: 5;
+        width: 80%;
+        max-width: 900px;
+        background: rgba(255,255,255,0.7);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(255,255,255,0.9);
+    }
+
+    .cert-header-img {
+        margin-bottom: 25px;
     }
 
     .cert-logo {
-        height: 70px;
-        margin-bottom: 20px;
+        height: 60px;
     }
 
     .cert-title {
-        font-size: 36px;
-        font-family: serif;
+        font-size: 46px;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
         color: #B5A82E;
-        letter-spacing: 4px;
-        margin-bottom: 10px;
+        letter-spacing: 3px;
+        margin-bottom: 8px;
         text-transform: uppercase;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
     }
 
     .cert-subtitle {
         font-size: 18px;
-        color: #555;
+        color: #666;
         margin-bottom: 40px;
-        font-style: italic;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 300;
+        letter-spacing: 2px;
+        text-transform: uppercase;
     }
 
     .cert-text {
         font-size: 20px;
         line-height: 1.8;
         color: #333;
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+    }
+
+    .cert-name-container {
+        margin: 25px 0;
     }
 
     .cert-name {
-        font-size: 32px;
-        font-weight: 700;
+        font-size: 56px;
+        font-family: 'Alex Brush', cursive; /* Elegant cursive font */
         color: #1a1a1a;
-        border-bottom: 2px solid #D6CA3E;
         display: inline-block;
-        padding: 0 40px;
-        margin: 10px 0;
+        padding: 0 50px;
+        position: relative;
+    }
+    
+    .cert-name::after {
+        content: '';
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #D6CA3E, transparent);
     }
 
     .cert-date {
-        margin-top: 40px;
+        margin-top: 35px;
         font-size: 16px;
-        color: #777;
+        color: #555;
+        font-weight: 600;
+        font-family: 'Outfit', sans-serif;
     }
 
     .cert-footer-text {
@@ -414,6 +572,7 @@ body {
         color: #777;
         margin-top: 40px;
         font-style: italic;
+        font-family: 'Playfair Display', serif;
     }
 }
 

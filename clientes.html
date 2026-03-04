@@ -9,7 +9,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Alex+Brush&display=swap"
+        rel="stylesheet">
 
     <!-- Admin CSS -->
     <link rel="stylesheet" href="admin.css">
@@ -165,23 +167,26 @@
 
     <!-- Template: Factura -->
     <div id="tpl-factura" class="print-template">
-        <div class="print-container">
-            <div class="print-header">
+        <div class="print-container type-factura">
+            <div class="print-header f-header">
                 <img src="img/logo.jpg" alt="Logo Descanso">
                 <div class="company-details">
                     <strong>DESCANSO S.A.C.</strong><br>
-                    RUC: 20123456789<br>
+                    <span style="color: #666; font-size: 13px;">RUC: 20123456789</span><br>
                     Av. Los Olivos 456, Lima<br>
                     Teléfono: +51 999 999 999<br>
                     hola@descanso.pe
                 </div>
             </div>
 
-            <div class="print-title">FACTURA ELECTRÓNICA<br> <span
-                    style="font-size: 16px; font-weight: normal; color: #555;">Nro: F001-0004589</span></div>
+            <div class="print-title f-title">
+                FACTURA ELECTRÓNICA<br>
+                <span style="font-size: 16px; font-weight: normal; color: #777; font-family: 'Outfit', sans-serif;">Nro:
+                    F001-0004589</span>
+            </div>
 
-            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                <div style="flex: 1;">
+            <div class="client-info-box">
+                <div style="flex: 2;">
                     <div class="data-row"><span class="data-label">Cliente:</span> <span
                             class="data-value f-cli-nombre"></span></div>
                     <div class="data-row"><span class="data-label">DNI/RUC:</span> <span
@@ -189,116 +194,157 @@
                     <div class="data-row"><span class="data-label">Dirección:</span> <span
                             class="data-value f-cli-direccion"></span></div>
                 </div>
-                <div style="width: 250px;">
+                <div style="flex: 1; padding-left: 30px; border-left: 2px solid #eee;">
                     <div class="data-row"><span class="data-label" style="width: 100px;">Fecha Emisión:</span> <span
-                            class="data-value f-fecha" style="text-align: right;"></span></div>
+                            class="data-value f-fecha" style="text-align: right; font-weight: 500;"></span></div>
                     <div class="data-row"><span class="data-label" style="width: 100px;">Moneda:</span> <span
-                            class="data-value" style="text-align: right;">Soles (PEN)</span></div>
+                            class="data-value" style="text-align: right; font-weight: 500;">Soles (PEN)</span></div>
                 </div>
             </div>
 
             <table class="invoice-table">
                 <thead>
                     <tr>
-                        <th style="width: 10%;">Cant.</th>
-                        <th style="width: 60%;">Descripción</th>
+                        <th style="width: 8%; text-align: center;">Cant.</th>
+                        <th style="width: 62%;">Descripción del Servicio</th>
                         <th style="width: 15%; text-align: right;">P. Unit.</th>
                         <th style="width: 15%; text-align: right;">Importe</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td style="text-align: center; font-weight: 600;">1</td>
                         <td>
-                            <strong>Servicio de Cremación de Mascotas</strong><br>
-                            Mascota: <span class="f-pet-nombre"></span><br>
-                            Paquete: <span class="f-plan"></span>
+                            <strong style="font-size: 15px; color: #1a1a1a;">Servicio de Cremación de
+                                Mascotas</strong><br>
+                            <span style="color: #555; font-size: 13px;">Mascota: <strong class="f-pet-nombre"
+                                    style="color:#333;"></strong></span><br>
+                            <span style="color: #555; font-size: 13px;">Paquete: <strong class="f-plan"
+                                    style="color:#333;"></strong></span>
                         </td>
                         <td class="amount f-precio"></td>
-                        <td class="amount f-precio"></td>
+                        <td class="amount f-precio font-weight-bold"></td>
                     </tr>
                 </tbody>
             </table>
 
-            <div class="invoice-total">
-                <div><span>Subtotal:</span> <span class="f-precio"
-                        style="display: inline-block; width: 100px; font-weight: normal;"></span></div>
-                <div><span>IGV (18%):</span> <span
-                        style="display: inline-block; width: 100px; font-weight: normal;">INCLUIDO</span></div>
-                <div style="border-top: 2px solid #000; margin-top: 10px; padding-top: 10px;"><span>Total a
-                        Pagar:</span> <span class="f-total" style="display: inline-block; width: 100px;"></span></div>
+            <div class="invoice-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span class="f-precio"></span>
+                </div>
+                <div class="summary-row">
+                    <span>IGV (18%):</span>
+                    <span>INCLUIDO</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total a Pagar:</span>
+                    <span class="f-total"></span>
+                </div>
             </div>
 
-            <div style="margin-top: 50px; text-align: center; font-size: 12px; color: #777;">
-                Representación impresa de la factura electrónica.<br>
-                Gracias por su confianza.
+            <div class="factura-footer">
+                <p>Representación impresa de la factura electrónica.</p>
+                <p><strong>Gracias por confiar en nosotros en estos momentos difíciles.</strong></p>
+                <div class="qr-placeholder">
+                    <!-- Fake barcode / QR for professional look -->
+                    <div
+                        style="width: 100px; height: 100px; border: 2px solid #ddd; display: inline-flex; align-items: center; justify-content: center; color: #ccc; font-size: 10px;">
+                        QR CODIGO</div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Template: Contrato -->
     <div id="tpl-contrato" class="print-template">
-        <div class="print-container">
-            <div class="print-header">
+        <div class="print-container type-contrato">
+            <!-- Watermark -->
+            <div class="watermark-logo"></div>
+
+            <div class="print-header c-header">
                 <img src="img/logo.jpg" alt="Logo Descanso">
-                <div class="company-details">
+                <div class="company-details" style="text-align: right;">
                     <strong>CONTRATO DE PRESTACIÓN DE SERVICIOS</strong><br>
-                    Nro. C-2026-0489<br>
-                    Fecha: <span class="c-fecha"></span>
+                    <span style="color: #666;">Nro. C-2026-0489</span><br>
+                    Fecha: <strong class="c-fecha"></strong>
                 </div>
             </div>
 
-            <div class="print-title">TÉRMINOS DEL SERVICIO</div>
+            <div class="print-title c-title" style="margin-bottom: 25px;">TÉRMINOS DEL SERVICIO</div>
 
             <div class="contract-body">
                 <p>Conste por el presente documento, el contrato de prestación de servicios funerarios y de cremación de
-                    mascotas que celebran, de una parte, <strong>DESCANSO S.A.C.</strong>, con RUC 20123456789, a quien
-                    en adelante se le denominará "LA EMPRESA"; y de la otra parte, el cliente cuyos datos se detallan a
-                    continuación, a quien en adelante se le denominará "EL CLIENTE":</p>
+                    mascotas que celebran, de una parte, <strong>DESCANSO S.A.C.</strong>, con RUC 20123456789, con
+                    domicilio legal en Av. Los Olivos 456, Lima, a quien en adelante se le denominará <strong>"LA
+                        EMPRESA"</strong>; y de la otra parte, el cliente cuyos datos se detallan a continuación, a
+                    quien en adelante se le denominará <strong>"EL CLIENTE"</strong>:</p>
 
-                <h4>1. DATOS DEL CLIENTE</h4>
-                <div class="data-row"><span class="data-label">Nombre:</span> <span
-                        class="data-value c-cli-nombre"></span></div>
-                <div class="data-row"><span class="data-label">DNI/RUC:</span> <span
-                        class="data-value c-cli-dni"></span></div>
-                <div class="data-row"><span class="data-label">Dirección:</span> <span
-                        class="data-value c-cli-direccion"></span></div>
-
-                <h4>2. DATOS DE LA MASCOTA</h4>
-                <div class="data-row"><span class="data-label">Nombre:</span> <span
-                        class="data-value c-pet-nombre"></span></div>
-                <div class="data-row"><span class="data-label">Especie:</span> <span
-                        class="data-value c-pet-especie"></span></div>
-                <div class="data-row"><span class="data-label">Raza:</span> <span class="data-value c-pet-raza"></span>
+                <div class="contract-section">
+                    <h4>1. DATOS DE EL CLIENTE</h4>
+                    <div class="data-grid">
+                        <div class="data-row"><span class="data-label">Nombre / Razón Social:</span> <span
+                                class="data-value c-cli-nombre"></span></div>
+                        <div class="data-row"><span class="data-label">DNI / RUC:</span> <span
+                                class="data-value c-cli-dni"></span></div>
+                        <div class="data-row"><span class="data-label">Dirección:</span> <span
+                                class="data-value c-cli-direccion"></span></div>
+                    </div>
                 </div>
 
-                <h4>3. DETALLE DEL SERVICIO</h4>
-                <p>LA EMPRESA se obliga frente a EL CLIENTE a prestar el servicio de cremación acorde a los estándares
-                    de salubridad, respeto y dignidad correspondientes al plan: <strong><span
-                            class="c-plan"></span></strong>.</p>
-                <p>El costo total por los servicios descritos asciende a la suma de <strong><span
-                            class="c-precio"></span></strong>, los cuales han sido cancelados en su totalidad a la firma
-                    del presente documento.</p>
+                <div class="contract-section">
+                    <h4>2. DATOS DE LA MASCOTA</h4>
+                    <div class="data-grid">
+                        <div class="data-row"><span class="data-label">Nombre de la Mascota:</span> <span
+                                class="data-value c-pet-nombre" style="font-weight: 600;"></span></div>
+                        <div class="data-row"><span class="data-label">Especie:</span> <span
+                                class="data-value c-pet-especie"></span></div>
+                        <div class="data-row"><span class="data-label">Raza:</span> <span
+                                class="data-value c-pet-raza"></span></div>
+                    </div>
+                </div>
 
-                <h4>4. CLÁUSULAS ADICIONALES</h4>
-                <p>LA EMPRESA garantiza la entrega individual de las cenizas en el recipiente acordado según el plan. EL
-                    CLIENTE certifica que tiene la autoridad legal para disponer de los restos mortales de la mascota
-                    antes mencionada.</p>
+                <div class="contract-section">
+                    <h4>3. DETALLE Y COSTO DEL SERVICIO</h4>
+                    <p>LA EMPRESA se obliga frente a EL CLIENTE a prestar el servicio de cremación acorde a los más
+                        altos estándares de salubridad, respeto y dignidad correspondientes al plan contratado:
+                        <strong><span class="c-plan" style="text-decoration: underline;"></span></strong>.
+                    </p>
+                    <p>El costo total por los servicios descritos asciende a la suma de <strong><span
+                                class="c-precio"></span> (Soles)</strong>, los cuales han sido cancelados en su
+                        totalidad a la firma del presente documento. Dicho monto es no reembolsable una vez iniciado el
+                        proceso.</p>
+                </div>
 
-                <p style="margin-top: 20px;">En señal de conformidad con todos los términos aquí descritos, ambas partes
-                    firman el presente contrato en dos ejemplares de igual valor legal.</p>
+                <div class="contract-section">
+                    <h4>4. CLÁUSULAS ADICIONALES</h4>
+                    <p><strong>4.1 De las Cenizas:</strong> LA EMPRESA garantiza la entrega individual de las cenizas en
+                        la urna o recipiente acordado según el plan. Las cenizas corresponderán única y exclusivamente a
+                        las de la mascota descrita en la sección 2.</p>
+                    <p><strong>4.2 De la Autoridad Legal:</strong> EL CLIENTE certifica, bajo declaración jurada, que
+                        tiene la autoridad legal y moral plena para disponer de los restos mortales de la mascota antes
+                        mencionada, liberando a LA EMPRESA de cualquier reclamación de terceros.</p>
+                </div>
+
+                <p style="margin-top: 30px; text-align: center; font-style: italic;">En señal de conformidad irrestricta
+                    con todos los términos aquí descritos, ambas partes firman el presente contrato en dos ejemplares de
+                    igual contenido y valor legal, en la ciudad de Lima.</p>
             </div>
 
             <div class="signatures">
                 <div class="signature-block">
                     <div class="signature-line"></div>
                     <strong>EL CLIENTE</strong><br>
-                    DNI: <span class="c-cli-dni"></span>
+                    <span style="color: #666;">DNI/RUC: <span class="c-cli-dni"></span></span>
                 </div>
                 <div class="signature-block">
+                    <!-- Fake signature for realistic look -->
+                    <div
+                        style="font-family: 'Alex Brush', cursive; font-size: 24px; color: #000; margin-bottom: -10px; transform: rotate(-5deg); opacity: 0.8;">
+                        J. Administrador</div>
                     <div class="signature-line"></div>
                     <strong>DESCANSO S.A.C.</strong><br>
-                    RUC: 20123456789
+                    <span style="color: #666;">RUC: 20123456789</span>
                 </div>
             </div>
         </div>
@@ -306,33 +352,53 @@
 
     <!-- Template: Certificado (Landscape A4 Layout) -->
     <div id="tpl-certificado" class="print-template">
-        <div class="print-container">
+        <div class="print-container type-certificado">
+            <div class="cert-border-outer"></div>
+            <div class="cert-border-inner"></div>
+
             <img src="img/logo.jpg" alt="Logo Background" class="cert-bg-logo">
+
             <div class="cert-content">
-                <img src="img/logo.jpg" alt="Logo Descanso" class="cert-logo">
+                <div class="cert-header-img">
+                    <img src="img/logo.jpg" alt="Logo Descanso" class="cert-logo">
+                </div>
+
                 <div class="cert-title">Certificado de Cremación</div>
-                <div class="cert-subtitle">Un tributo a una vida llena de amor</div>
+                <div class="cert-subtitle">Un tributo a una vida llena de amor y lealtad</div>
 
                 <div class="cert-text">
-                    El presente documento certifica que<br>
-                    los restos de nuestro amado amigo<br>
-                    <div class="cert-name cert-pet-nombre"></div><br>
-                    fueron tratados de manera digna y respetuosa<br>
-                    mediante el proceso de cremación individual.
+                    El presente documento certifica con profundo respeto que<br>
+                    los restos de nuestro amado y entrañable amigo
+                </div>
+
+                <div class="cert-name-container">
+                    <span class="cert-name cert-pet-nombre"></span>
+                </div>
+
+                <div class="cert-text">
+                    fueron tratados de manera digna, amorosa y respetuosa<br>
+                    mediante el proceso de cremación individual, para que su recuerdo perdure.
                 </div>
 
                 <div class="cert-date cert-fecha"></div>
 
-                <div class="signatures" style="margin-top: 60px;">
-                    <div class="signature-block">
+                <div class="signatures" style="margin-top: 50px; justify-content: center;">
+                    <div class="signature-block" style="width: 250px;">
+                        <div
+                            style="font-family: 'Alex Brush', cursive; font-size: 32px; color: #1a1a1a; margin-bottom: -15px;">
+                            A. Descanso</div>
                         <div class="signature-line" style="border-top: 1px solid #D6CA3E;"></div>
-                        <strong style="color: #555;">Dirección General</strong><br>
-                        <span style="font-size: 12px; color: #777;">Descanso S.A.C.</span>
+                        <strong
+                            style="color: #333; font-family: 'Outfit', sans-serif; font-size: 14px; text-transform: uppercase;">Dirección
+                            General</strong><br>
+                        <span style="font-size: 12px; color: #777; font-family: 'Outfit', sans-serif;">Descanso
+                            S.A.C.</span>
                     </div>
                 </div>
 
                 <div class="cert-footer-text">
-                    "Aquellos que amamos no se van, caminan a nuestro lado cada día."
+                    "Aquellos que amamos no se van, caminan a nuestro lado cada día;<br>
+                    invisibles, inaudibles, pero siempre tan cerca y tan queridos."
                 </div>
             </div>
         </div>
